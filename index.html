@@ -64,6 +64,18 @@
 <div id="testCodeMessage">Test code</div>
 
 <script>
+    // ตรวจสอบสถานะการล็อกอินเมื่อโหลดหน้าเว็บ
+    window.onload = function() {
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('testCodeMessage').style.display = 'block';
+        } else {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('testCodeMessage').style.display = 'none';
+        }
+    };
+
+    // การล็อกอิน
     document.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -73,13 +85,24 @@
 
         // ตรวจสอบข้อมูลผู้ใช้
         if (username === 'TATAR' && password === 'Pass1234') {
-            // ซ่อนฟอร์ม login
+            // ซ่อนฟอร์ม login และแสดงข้อความ "Test code"
             document.getElementById('loginForm').style.display = 'none';
-            // แสดงข้อความ "Test code"
             document.getElementById('testCodeMessage').style.display = 'block';
+            // บันทึกสถานะการล็อกอิน
+            localStorage.setItem('isLoggedIn', 'true');
         } else {
             document.getElementById('errorMessage').textContent = 'Invalid username or password';
         }
+    });
+
+    // ตรวจจับการพยายามรีเฟรชหรือปิดแท็บ
+    window.onbeforeunload = function() {
+        return 'Are you sure you want to leave? You will need to login again.';
+    };
+
+    // รีเซ็ตสถานะการล็อกอินเมื่อโหลดหน้าใหม่
+    window.addEventListener('unload', function() {
+        localStorage.setItem('isLoggedIn', 'false');
     });
 </script>
 
