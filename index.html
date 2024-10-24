@@ -40,36 +40,45 @@
         .success {
             color: green;
         }
+        #testCodeMessage {
+            display: none;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: green;
+        }
     </style>
 </head>
 <body>
 
-<div class="login-container">
+<div class="login-container" id="loginForm">
     <h2>Login</h2>
-    <form id="loginForm">
+    <form>
         <input type="text" id="username" placeholder="Username" required>
         <input type="password" id="password" placeholder="Password" required>
         <button type="submit">Login</button>
         <p class="error" id="errorMessage"></p>
-        <p class="success" id="successMessage"></p>
     </form>
 </div>
 
+<div id="testCodeMessage">Test code</div>
+
 <script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
+    document.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
 
-        // เก็บค่าที่ใส่จากฟอร์ม
+        // รับค่าจากฟอร์ม
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
         // ตรวจสอบข้อมูลผู้ใช้
-        if (username === 'TATAR' && password === '1234') {
-            document.getElementById('successMessage').textContent = 'test code'; // แสดงข้อความ "test code"
-            document.getElementById('errorMessage').textContent = ''; // ล้างข้อความ error
+        if (username === 'TATAR' && password === 'Pass1234') {
+            // ซ่อนฟอร์ม login
+            document.getElementById('loginForm').style.display = 'none';
+            // แสดงข้อความ "Test code"
+            document.getElementById('testCodeMessage').style.display = 'block';
         } else {
             document.getElementById('errorMessage').textContent = 'Invalid username or password';
-            document.getElementById('successMessage').textContent = ''; // ล้างข้อความ success
         }
     });
 </script>
